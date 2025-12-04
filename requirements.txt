@@ -1,0 +1,28 @@
+# Dependencies untuk Sistem Perpustakaan Digital
+# Version: 1.0.0
+# Python 3.8+
+
+# GUI Framework
+# Tkinter adalah bagian standard library Python (built-in, tidak perlu install)
+
+# Core Dependencies
+python-dateutil==2.8.2    # Date/Time utilities
+tkcalendar==1.6.1         # Calendar widget untuk date selection
+
+# Password hashing (opsional, sudah ada di stdlib hashlib)
+# bcrypt==4.1.2
+
+# Testing & Quality Assurance (opsional untuk development)
+pytest==7.4.3             # Unit testing framework
+pytest-cov==4.1.0        # Code coverage reporting
+
+# Code Quality Tools (opsional untuk development)
+flake8==6.1.0             # Style guide enforcement
+black==23.12.0            # Code formatter
+pylint==3.0.0             # Code analyzer
+
+# Notes:
+# - Aplikasi sudah ditest dan production-ready
+# - Untuk menjalankan: python main.py
+# - Untuk generate sample data: python generate_sample_data.py
+# - Untuk menjalankan tests: pytest tests/test_system.py
