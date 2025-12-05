@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "transaction_id": "710f2ee9",
+    "user_id": "d27e73be",
+    "book_id": "137f8a9e",
+    "transaction_type": "Peminjaman",
+    "transaction_date": "2025-12-05T15:00:21.944711",
+    "due_date": "2025-12-12T15:00:21.944671",
+    "return_date": "2025-12-05T15:03:37.308916",
+    "fine_amount": 0.0,
+    "status": "Selesai",
+    "notes": ""
+  },
+  {
+    "transaction_id": "a286ae52",
+    "user_id": "d27e73be",
+    "book_id": "137f8a9e",
+    "transaction_type": "Peminjaman",
+    "transaction_date": "2025-12-05T16:12:20.732464",
+    "due_date": "2025-12-12T16:12:20.732438",
+    "return_date": "2025-12-05T16:15:39.079554",
+    "fine_amount": 0.0,
+    "status": "Selesai",
+    "notes": ""
+  }
+]

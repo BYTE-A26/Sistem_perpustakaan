@@ -16,7 +16,7 @@
     "status": "Tersedia",
     "rating": 0.0,
     "views": 0,
-    "borrow_count": 0
+    "borrow_count": 2
   },
   {
     "book_id": "1e4d591a",
@@ -191,7 +191,7 @@
   },
   {
     "book_id": "8871f536",
-    "title": "The Great Gatsby",
+    "title": "The Great  Gatsby",
     "author": "F. Scott Fitzgerald",
     "publisher": "Scribner",
     "isbn": "978-0743273565",
@@ -220,25 +220,6 @@
     "available_copies": 6,
     "location": "Rak B1",
     "description": "A great computer science book: Algorithms",
-    "pages": 310,
-    "language": "English",
-    "status": "Tersedia",
-    "rating": 0.0,
-    "views": 0,
-    "borrow_count": 0
-  },
-  {
-    "book_id": "b5a1bb8f",
-    "title": "Clean Code",
-    "author": "Robert C. Martin",
-    "publisher": "Prentice Hall",
-    "isbn": "978-0132350884",
-    "publication_year": 2008,
-    "category": "Programming",
-    "total_copies": 4,
-    "available_copies": 4,
-    "location": "Rak A2",
-    "description": "A great programming book: Clean Code",
     "pages": 310,
     "language": "English",
     "status": "Tersedia",

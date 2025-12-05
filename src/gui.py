@@ -561,7 +561,7 @@ class LibraryGUI:
             # Create edit window
             edit_window = tk.Toplevel(manage_window)
             edit_window.title(f"Edit Buku - {book_id}")
-            edit_window.geometry("500x450")
+            edit_window.geometry("550x700") 
             
             edit_frame = ttk.Frame(edit_window, padding="15")
             edit_frame.pack(fill="both", expand=True)
@@ -584,7 +584,7 @@ class LibraryGUI:
             ttk.Entry(edit_frame, textvariable=isbn_var, width=50).pack(anchor="w", pady=2)
             
             ttk.Label(edit_frame, text="Tahun Terbit:").pack(anchor="w", pady=5)
-            year_var = tk.StringVar(value=str(book.year))
+            year_var = tk.StringVar(value=str(book.publication_year))
             ttk.Entry(edit_frame, textvariable=year_var, width=50).pack(anchor="w", pady=2)
             
             ttk.Label(edit_frame, text="Total Copies:").pack(anchor="w", pady=5)
