@@ -514,27 +514,141 @@ class LibraryGUI:
         """Manage existing books"""
         manage_window = tk.Toplevel(self.root)
         manage_window.title("Kelola Buku")
-        manage_window.geometry("800x500")
+        manage_window.geometry("900x550")
         
         frame = ttk.Frame(manage_window, padding="10")
         frame.pack(fill="both", expand=True)
         
+        # Title
+        ttk.Label(frame, text="Manajemen Buku", font=("Arial", 12, "bold")).pack(pady=5)
+        
         books = self.library_manager.get_all_books()
         
-        tree = ttk.Treeview(frame, columns=("Judul", "Author", "Tersedia", "Total"),
+        tree = ttk.Treeview(frame, columns=("Judul", "Author", "Tersedia", "Total", "Kategori"),
                            height=15)
         tree.heading("#0", text="Book ID")
         tree.heading("Judul", text="Judul")
         tree.heading("Author", text="Author")
         tree.heading("Tersedia", text="Tersedia")
         tree.heading("Total", text="Total")
+        tree.heading("Kategori", text="Kategori")
         
         for book_id, book in books:
             tree.insert("", "end", text=book_id,
                        values=(book.title, book.author,
-                              book.available_copies, book.total_copies))
+                              book.available_copies, book.total_copies, book.category))
         
         tree.pack(fill="both", expand=True, pady=10)
+        
+        # Button frame
+        button_frame = ttk.Frame(frame)
+        button_frame.pack(fill="x", pady=10)
+        
+        def edit_selected_book():
+            """Edit selected book"""
+            selection = tree.selection()
+            if not selection:
+                messagebox.showwarning("Warning", "Pilih buku terlebih dahulu")
+                return
+            
+            book_id = tree.item(selection[0])['text']
+            book = self.library_manager.get_book(book_id)
+            
+            if book is None:
+                messagebox.showerror("Error", "Buku tidak ditemukan")
+                return
+            
+            # Create edit window
+            edit_window = tk.Toplevel(manage_window)
+            edit_window.title(f"Edit Buku - {book_id}")
+            edit_window.geometry("500x450")
+            
+            edit_frame = ttk.Frame(edit_window, padding="15")
+            edit_frame.pack(fill="both", expand=True)
+            
+            # Form fields
+            ttk.Label(edit_frame, text="Judul:").pack(anchor="w", pady=5)
+            title_var = tk.StringVar(value=book.title)
+            ttk.Entry(edit_frame, textvariable=title_var, width=50).pack(anchor="w", pady=2)
+            
+            ttk.Label(edit_frame, text="Author:").pack(anchor="w", pady=5)
+            author_var = tk.StringVar(value=book.author)
+            ttk.Entry(edit_frame, textvariable=author_var, width=50).pack(anchor="w", pady=2)
+            
+            ttk.Label(edit_frame, text="Kategori:").pack(anchor="w", pady=5)
+            category_var = tk.StringVar(value=book.category)
+            ttk.Entry(edit_frame, textvariable=category_var, width=50).pack(anchor="w", pady=2)
+            
+            ttk.Label(edit_frame, text="ISBN:").pack(anchor="w", pady=5)
+            isbn_var = tk.StringVar(value=book.isbn)
+            ttk.Entry(edit_frame, textvariable=isbn_var, width=50).pack(anchor="w", pady=2)
+            
+            ttk.Label(edit_frame, text="Tahun Terbit:").pack(anchor="w", pady=5)
+            year_var = tk.StringVar(value=str(book.year))
+            ttk.Entry(edit_frame, textvariable=year_var, width=50).pack(anchor="w", pady=2)
+            
+            ttk.Label(edit_frame, text="Total Copies:").pack(anchor="w", pady=5)
+            total_var = tk.StringVar(value=str(book.total_copies))
+            ttk.Entry(edit_frame, textvariable=total_var, width=50).pack(anchor="w", pady=2)
+            
+            ttk.Label(edit_frame, text="Deskripsi:").pack(anchor="w", pady=5)
+            desc_var = tk.StringVar(value=book.description)
+            desc_text = scrolledtext.ScrolledText(edit_frame, width=50, height=5)
+            desc_text.insert("1.0", book.description)
+            desc_text.pack(anchor="w", pady=2)
+            
+            def save_changes():
+                """Save changes to book"""
+                try:
+                    success, message = self.library_manager.update_book(
+                        book_id,
+                        title=title_var.get(),
+                        author=author_var.get(),
+                        category=category_var.get(),
+                        isbn=isbn_var.get(),
+                        year=int(year_var.get()),
+                        total_copies=int(total_var.get()),
+                        description=desc_text.get("1.0", "end-1c")
+                    )
+                    
+                    if success:
+                        messagebox.showinfo("Success", message)
+                        self.persistence.save_all(self.library_manager, self.auth_manager)
+                        edit_window.destroy()
+                        manage_window.destroy()
+                        self.open_manage_books()  # Refresh
+                    else:
+                        messagebox.showerror("Error", message)
+                except ValueError:
+                    messagebox.showerror("Error", "Tahun dan Total Copies harus berupa angka")
+            
+            # Save button
+            ttk.Button(edit_frame, text="Simpan Perubahan", command=save_changes).pack(pady=10, fill="x")
+        
+        def delete_selected_book():
+            """Delete selected book"""
+            selection = tree.selection()
+            if not selection:
+                messagebox.showwarning("Warning", "Pilih buku terlebih dahulu")
+                return
+            
+            book_id = tree.item(selection[0])['text']
+            
+            # Confirmation dialog
+            if messagebox.askyesno("Konfirmasi", f"Hapus buku {book_id}?\nIni tidak dapat dibatalkan!"):
+                success, message = self.library_manager.delete_book(book_id)
+                
+                if success:
+                    messagebox.showinfo("Success", message)
+                    self.persistence.save_all(self.library_manager, self.auth_manager)
+                    manage_window.destroy()
+                    self.open_manage_books()  # Refresh
+                else:
+                    messagebox.showerror("Error", message)
+        
+        ttk.Button(button_frame, text="Edit Buku", command=edit_selected_book).pack(side="left", padx=5)
+        ttk.Button(button_frame, text="Hapus Buku", command=delete_selected_book).pack(side="left", padx=5)
+        ttk.Button(button_frame, text="Tutup", command=manage_window.destroy).pack(side="right", padx=5)
 
     def open_borrow_book(self):
         """Process book borrowing (librarian)"""
