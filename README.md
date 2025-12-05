@@ -5,7 +5,7 @@
 **Status**: ✅ **COMPLETE & PRODUCTION READY**  
 **Version**: 1.0.0  
 **Date**: December 4, 2025  
-**Last Updated**: December 5, 2025
+**Last Updated**: December 4, 2025
 
 ---
 
@@ -26,13 +26,17 @@
 6. Linked List
 7. Min Heap (Bonus)
 
-### ✅ Core Features (6/6)
+### ✅ Core Features (10/10)
 - Manajemen data (BST + Hash Table)
 - Sistem transaksi (Queue + Stack)
 - Pencarian multi-kriteria
 - Sistem rekomendasi (Graph)
 - Manajemen user (Hash Table + Encryption)
 - Analytics & reporting
+- Memasukkan entri buku baru ke dalam database.
+- Mengubah detail informasi buku yang sudah ada.
+- Menghapus data buku secara permanen dari sistem.
+- Mencatat transaksi peminjaman buku oleh anggota.
 
 ### ✅ Technical Implementation (All Requirements Met)
 - GUI dengan Tkinter ✅
